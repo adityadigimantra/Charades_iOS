@@ -1,0 +1,8 @@
+Product ID,Published State,Purchase Type,Auto Translate,Locale; Title; Description,Auto Fill Prices,Price,Pricing Template ID
+com_charades_animals,published,managed_by_android,false,en_US;Animals;Buy the animals category.,true,9990000,
+com_charades_celebrities,published,managed_by_android,false,en_US;Celebrities;Buy the celebrities category.,true,9990000,
+com_charades_music,published,managed_by_android,false,en_US;Music;Buys the music category.,true,9990000,
+com_charades_cars,published,managed_by_android,false,en_US;Cars;Buys the cars category.,true,9990000,
+com_charades_countries,published,managed_by_android,false,en_US;Countries;Buys the countries category.,true,9990000,
+com_charades_fastfood,published,managed_by_android,false,en_US;Fast Food;Buys the fast food category.,true,9990000,
+com_charades_fulldeck,published,managed_by_android,false,en_US;Full Deck;Buys the Full Deck.,true,49990000,

@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Main
+  - YourDeck
+  - GoWords
+  - Round1
+  - Round2
+  - Round3
+  - Round4
+  - Round5
+  - Round6
+  - Round7
+  - WinnerTag
+  - ResetRounds
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Header
+    uniqueID: 2623340497
+    locked: 0
+  - name: Categories
+    uniqueID: 4212656531
+    locked: 0

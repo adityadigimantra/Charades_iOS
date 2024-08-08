@@ -50,6 +50,8 @@ public class GameManager : MonoBehaviour
     [Header("Single QuickPlay-High/Low")]
     public GameObject low_Single_QuickPlay_PassAnswerPanel;
     public GameObject low_Single_QuickPlay_CorrectAnswerPanel;
+    public GameObject low_Single_QuickPlay_NoWordsFound;
+    public GameObject high_Single_QuickPlay_NoWordsFound;
     public GameObject high_Single_QuickPlay_PassAnswerPanel;
     public GameObject high_Single_QuickPlay_CorrectAnswerPanel;
 
@@ -125,6 +127,7 @@ public class GameManager : MonoBehaviour
     [Header("Team Section-Low Resolution")]
     public GameObject low_groupSection;
     public GameObject low_Group_TeamsSection;
+    public GameObject low_Group_Team_Eng_CountDownItemsPanel;
     public GameObject[] low_Group_Team_Eng_CountDownItems;
     public GameObject low_Group_Team_CloseButton;
     public Text low_Group_Team_Eng_GameTimeText;
@@ -134,6 +137,7 @@ public class GameManager : MonoBehaviour
     [Header("Team Section-High Resolution")]
     public GameObject high_groupSection;
     public GameObject high_Group_TeamsSection;
+    public GameObject high_Group_Team_Eng_CountDownItemsPanel;
     public GameObject[] high_Group_Team_Eng_CountDownItems;
     public GameObject high_Group_Team_CloseButton;
     public Text high_Group_Team_Eng_GameTimeText;
@@ -144,6 +148,7 @@ public class GameManager : MonoBehaviour
     [Header("SingleSection-Low Resolution")]
     public GameObject low_singleSection;
     public GameObject low_Single_QuickPlaySection;
+    public GameObject low_Single_QuickPlay_Eng_CountDownItemsPanel;
     public GameObject[] low_Single_QuickPlay_Eng_CountDownItems;
     public GameObject low_Single_QuickPlay_CloseButton;
     public Text low_Single_QuickPlay_Eng_GameTimeText;
@@ -152,6 +157,7 @@ public class GameManager : MonoBehaviour
     [Header("SingleSection-High Resolution")]
     public GameObject high_singleSection;
     public GameObject high_Single_QuickPlaySection;
+    public GameObject high_Single_QuickPlay_Eng_CountDownItemsPanel;
     public GameObject[] high_Single_QuickPlay_Eng_CountDownItems;
     public GameObject high_Single_QuickPlay_CloseButton;
     public Text high_Single_QuickPlay_Eng_GameTimeText;
@@ -793,7 +799,7 @@ public class GameManager : MonoBehaviour
                     low_groupSection.SetActive(false);
                     //gameSection.SetActive(false);
                     low_gameSection_animator.SetBool("IsOpen", false);
-                    StartCoroutine(CloseGameSectionAfterFewSec());
+                    //StartCoroutine(CloseGameSectionAfterFewSec());
                 }
             }
         }
@@ -841,7 +847,7 @@ public class GameManager : MonoBehaviour
                     high_groupSection.SetActive(false);
                     //gameSection.SetActive(false);
                     high_gameSection_animator.SetBool("IsOpen", false);
-                    StartCoroutine(CloseGameSectionAfterFewSec());
+                    //StartCoroutine(CloseGameSectionAfterFewSec());
                 }
             }
 
@@ -875,6 +881,7 @@ public class GameManager : MonoBehaviour
 
             }
             low_countDownCreamPanel.SetActive(false);
+            low_gameWhitePanel.SetActive(true);
             low_Group_Team_Eng_SettingData.gameObject.SetActive(false);
             low_Group_Team_Eng_GameTimeText.gameObject.SetActive(true);
             PlayerPrefs.SetInt("GameStarted", 1);
@@ -902,6 +909,7 @@ public class GameManager : MonoBehaviour
 
             }
             high_countDownCreamPanel.SetActive(false);
+            high_gameWhitePanel.SetActive(true);
             high_Group_Team_Eng_SettingData.gameObject.SetActive(false);
             high_Group_Team_Eng_GameTimeText.gameObject.SetActive(true);
             PlayerPrefs.SetInt("GameStarted", 1);
@@ -1580,6 +1588,14 @@ public class GameManager : MonoBehaviour
             {
                 GameOverMenu.instance.low_single_correctAnswersGiven.text = Single_QuickPlay_CorrectAnswerGiven.Count.ToString();
                 GameOverMenu.instance.low_single_wrongAnswersGiven.text = Single_QuickPlay_WrongAnswerGiven.Count.ToString();
+                if(Single_QuickPlay_CorrectAnswerGiven.Count==0 && Single_QuickPlay_WrongAnswerGiven.Count==0)
+                {
+                    low_Single_QuickPlay_NoWordsFound.SetActive(true);
+                }
+                else
+                {
+                    low_Single_QuickPlay_NoWordsFound.SetActive(false);
+                }
             }
         }
         else
@@ -1588,6 +1604,14 @@ public class GameManager : MonoBehaviour
             {
                 GameOverMenu.instance.high_single_correctAnswersGiven.text = Single_QuickPlay_CorrectAnswerGiven.Count.ToString();
                 GameOverMenu.instance.high_single_wrongAnswersGiven.text = Single_QuickPlay_WrongAnswerGiven.Count.ToString();
+                if (Single_QuickPlay_CorrectAnswerGiven.Count == 0 && Single_QuickPlay_WrongAnswerGiven.Count == 0)
+                {
+                    high_Single_QuickPlay_NoWordsFound.SetActive(true);
+                }
+                else
+                {
+                    high_Single_QuickPlay_NoWordsFound.SetActive(false);
+                }
             }
         }
 
@@ -3196,15 +3220,7 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < SubcategoryFetcher.subCatLists.Count; i++)
         {
-            if (!WordList.Contains(SubcategoryFetcher.subCatLists[i].name))
-            {
-                WordList.Add(SubcategoryFetcher.subCatLists[i].name);
-            }
-            else
-            {
-                return;
-            }
-
+            WordList.Add(SubcategoryFetcher.subCatLists[i].name);
         }
     }
 
@@ -4324,238 +4340,10 @@ public class GameManager : MonoBehaviour
 
     public void CloseGameSections()
     {
-        if(PlayerPrefs.GetString("UIType")=="lowRes")
-        {
-            //Low Res UI.
-            if (PlayerPrefs.GetString("GameType") == "SingleQuickPlay")
-            {
-                //Handles game closing for Single QuickPlay.
-                WordList.Clear();
-                low_gameSection_animator.SetBool("IsOpen", false);
-                roundEnded = true;
-                StopTimer();
-                totalTime = 30;
-                timeRemaining = totalTime;
-                shownWords.Clear();
-                Single_QuickPlay_CorrectAnswerGiven.Clear();
-                Single_QuickPlay_WrongAnswerGiven.Clear();
-                nextWord = "";
-                currentWord = "";
-                low_Single_QuickPlay_WordText.gameObject.SetActive(false);
-                low_Single_QuickPlaySection.SetActive(false);
-                low_singleSection.SetActive(false);
-                low_gameWhitePanel.SetActive(false);
-                if (low_GameOverPanel.activeSelf)
-                {
-                    low_GameOverPanel_animator.SetBool("IsOpen", false);
-                    StartCoroutine(CloseGameoverMenuAfterFewSec());
-                    StartCoroutine(CloseGameSectionAfterFewSec());
-                }
-                else
-                {
-                    StartCoroutine(CloseGameSectionAfterFewSec());
-                }
-            }
-
-            if (PlayerPrefs.GetString("GameType") == "GroupVersus")
-            {
-                //Handles game closing for Group Versus.
-                roundEnded = true;
-                teams.Clear();
-                //WordList.Clear();
-                shownWords.Clear();
-                WordList.Clear();
-                Temp_TeamList1.Clear();
-                Temp_TeamList2.Clear();
-                Temp_TeamList3.Clear();
-                Temp_TeamList4.Clear();
-                Temp_TeamList1_Wrong.Clear();
-                Temp_TeamList2_Wrong.Clear();
-                Temp_TeamList3_Wrong.Clear();
-                Temp_TeamList4_Wrong.Clear();
-                nextWord = "";
-                currentWord = "";
-                low_Group_Team_WordText.gameObject.SetActive(false);
-                StopTimer();
-                totalTime = 30;
-                timeRemaining = totalTime;
-                currentMatch = 0;
-                //Clearing All CorrectAnswers
-                correctAnswerGivenT1R1 = 0;
-                correctAnswerGivenT1R2 = 0;
-                correctAnswerGivenT1R3 = 0;
-                correctAnswerGivenT1R4 = 0;
-                correctAnswerGivenT1R5 = 0;
-                correctAnswerGivenT1R6 = 0;
-                correctAnswerGivenT1R7 = 0;
-
-                correctAnswerGivenT2R1 = 0;
-                correctAnswerGivenT2R2 = 0;
-                correctAnswerGivenT2R3 = 0;
-                correctAnswerGivenT2R4 = 0;
-                correctAnswerGivenT2R5 = 0;
-                correctAnswerGivenT2R6 = 0;
-                correctAnswerGivenT2R7 = 0;
-
-                correctAnswerGivenT3R1 = 0;
-                correctAnswerGivenT3R2 = 0;
-                correctAnswerGivenT3R3 = 0;
-                correctAnswerGivenT3R4 = 0;
-                correctAnswerGivenT3R5 = 0;
-                correctAnswerGivenT3R6 = 0;
-                correctAnswerGivenT3R7 = 0;
-
-                correctAnswerGivenT4R1 = 0;
-                correctAnswerGivenT4R2 = 0;
-                correctAnswerGivenT4R3 = 0;
-                correctAnswerGivenT4R4 = 0;
-                correctAnswerGivenT4R5 = 0;
-                correctAnswerGivenT4R6 = 0;
-                correctAnswerGivenT4R7 = 0;
-
-                for (int i = 0; i < low_roundsObjs.Length; i++)
-                {
-                    low_roundsObjs[i].transform.GetChild(1).transform.GetChild(0).transform.GetChild(3).GetComponent<Text>().text = "0";
-                    low_roundsObjs[i].transform.GetChild(1).transform.GetChild(0).transform.GetChild(0).gameObject.SetActive(false);
-                    low_roundsObjs[i].transform.GetChild(1).transform.GetChild(1).transform.GetChild(3).GetComponent<Text>().text = "0";
-                    low_roundsObjs[i].transform.GetChild(1).transform.GetChild(1).transform.GetChild(0).gameObject.SetActive(false);
-                    low_roundsObjs[i].transform.GetChild(1).transform.GetChild(2).transform.GetChild(3).GetComponent<Text>().text = "0";
-                    low_roundsObjs[i].transform.GetChild(1).transform.GetChild(2).transform.GetChild(0).gameObject.SetActive(false);
-                    low_roundsObjs[i].transform.GetChild(1).transform.GetChild(3).transform.GetChild(3).GetComponent<Text>().text = "0";
-                    low_roundsObjs[i].transform.GetChild(1).transform.GetChild(3).transform.GetChild(0).gameObject.SetActive(false);
-                }
-                low_gameSection_animator.SetBool("IsOpen", false);
-                low_Group_TeamsSection.SetActive(false);
-                low_groupSection.SetActive(false);
-                StartCoroutine(CloseGameSectionAfterFewSec());
-                //gameSection.SetActive(false);
-                foreach (GameObject g in goWords)
-                {
-                    Destroy(g);
-                }
-                PlayerPrefs.SetInt("GameStarted", 0);
-                SceneManager.LoadScene(1);
-            }
-        }
-        else
-        {
-            //High Res UI.
-            if (PlayerPrefs.GetString("GameType") == "SingleQuickPlay")
-            {
-                //Handles game closing for Single QuickPlay.
-                high_gameSection_animator.SetBool("IsOpen", false);
-                WordList.Clear();
-                roundEnded = true;
-                StopTimer();
-                totalTime = 30;
-                timeRemaining = totalTime;
-                shownWords.Clear();
-                Single_QuickPlay_CorrectAnswerGiven.Clear();
-                Single_QuickPlay_WrongAnswerGiven.Clear();
-                nextWord = "";
-                currentWord = "";
-                high_Single_QuickPlay_WordText.gameObject.SetActive(false);
-                high_Single_QuickPlaySection.SetActive(false);
-                high_singleSection.SetActive(false);
-                high_gameWhitePanel.SetActive(false);
-                if (high_GameOverPanel.activeSelf)
-                {
-                    high_GameOverPanel_animator.SetBool("IsOpen", false);
-                    StartCoroutine(CloseGameoverMenuAfterFewSec());
-                    StartCoroutine(CloseGameSectionAfterFewSec());
-                }
-                else
-                {
-                    StartCoroutine(CloseGameSectionAfterFewSec());
-                }
-            }
-
-            if (PlayerPrefs.GetString("GameType") == "GroupVersus")
-            {
-                //Handles game closing for Group Versus.
-                roundEnded = true;
-                teams.Clear();
-                //WordList.Clear();
-                shownWords.Clear();
-                WordList.Clear();
-                Temp_TeamList1.Clear();
-                Temp_TeamList2.Clear();
-                Temp_TeamList3.Clear();
-                Temp_TeamList4.Clear();
-                Temp_TeamList1_Wrong.Clear();
-                Temp_TeamList2_Wrong.Clear();
-                Temp_TeamList3_Wrong.Clear();
-                Temp_TeamList4_Wrong.Clear();
-                nextWord = "";
-                currentWord = "";
-                high_Group_Team_WordText.gameObject.SetActive(false);
-                StopTimer();
-                totalTime = 30;
-                timeRemaining = totalTime;
-                currentMatch = 0;
-                //Clearing All CorrectAnswers
-                correctAnswerGivenT1R1 = 0;
-                correctAnswerGivenT1R2 = 0;
-                correctAnswerGivenT1R3 = 0;
-                correctAnswerGivenT1R4 = 0;
-                correctAnswerGivenT1R5 = 0;
-                correctAnswerGivenT1R6 = 0;
-                correctAnswerGivenT1R7 = 0;
-
-                correctAnswerGivenT2R1 = 0;
-                correctAnswerGivenT2R2 = 0;
-                correctAnswerGivenT2R3 = 0;
-                correctAnswerGivenT2R4 = 0;
-                correctAnswerGivenT2R5 = 0;
-                correctAnswerGivenT2R6 = 0;
-                correctAnswerGivenT2R7 = 0;
-
-                correctAnswerGivenT3R1 = 0;
-                correctAnswerGivenT3R2 = 0;
-                correctAnswerGivenT3R3 = 0;
-                correctAnswerGivenT3R4 = 0;
-                correctAnswerGivenT3R5 = 0;
-                correctAnswerGivenT3R6 = 0;
-                correctAnswerGivenT3R7 = 0;
-
-                correctAnswerGivenT4R1 = 0;
-                correctAnswerGivenT4R2 = 0;
-                correctAnswerGivenT4R3 = 0;
-                correctAnswerGivenT4R4 = 0;
-                correctAnswerGivenT4R5 = 0;
-                correctAnswerGivenT4R6 = 0;
-                correctAnswerGivenT4R7 = 0;
-
-                for (int i = 0; i < high_roundsObjs.Length; i++)
-                {
-                    high_roundsObjs[i].transform.GetChild(1).transform.GetChild(0).transform.GetChild(3).GetComponent<Text>().text = "0";
-                    high_roundsObjs[i].transform.GetChild(1).transform.GetChild(0).transform.GetChild(0).gameObject.SetActive(false);
-                    high_roundsObjs[i].transform.GetChild(1).transform.GetChild(1).transform.GetChild(3).GetComponent<Text>().text = "0";
-                    high_roundsObjs[i].transform.GetChild(1).transform.GetChild(1).transform.GetChild(0).gameObject.SetActive(false);
-                    high_roundsObjs[i].transform.GetChild(1).transform.GetChild(2).transform.GetChild(3).GetComponent<Text>().text = "0";
-                    high_roundsObjs[i].transform.GetChild(1).transform.GetChild(2).transform.GetChild(0).gameObject.SetActive(false);
-                    high_roundsObjs[i].transform.GetChild(1).transform.GetChild(3).transform.GetChild(3).GetComponent<Text>().text = "0";
-                    high_roundsObjs[i].transform.GetChild(1).transform.GetChild(3).transform.GetChild(0).gameObject.SetActive(false);
-                }
-                high_gameSection_animator.SetBool("IsOpen", false);
-                high_Group_TeamsSection.SetActive(false);
-                high_groupSection.SetActive(false);
-                StartCoroutine(CloseGameSectionAfterFewSec());
-                //gameSection.SetActive(false);
-                foreach (GameObject g in goWords)
-                {
-                    Destroy(g);
-                }
-                PlayerPrefs.SetInt("GameStarted", 0);
-                SceneManager.LoadScene(1);
-            }
-        }
-        
+        PlayerPrefs.SetInt("GameStarted", 0);
+        HomeManager.instance.loadingObj.SetActive(true);
+        LevelLoader.instance.ReloadLoadingTransition();
     }
-
-
-    
-
 
     public void ClosingCharadeDetailPanel()
     {
@@ -4587,6 +4375,7 @@ public class GameManager : MonoBehaviour
             ResetRoundCorrectAnswerList.Clear();
             ResetRoundWrongAnswerList.Clear();
             low_NoWordAtResetRound.SetActive(false);
+            low_gameWhitePanel.SetActive(false);
             PlayerPrefs.SetInt("GameStarted", 0);
         }
         else
@@ -4597,6 +4386,7 @@ public class GameManager : MonoBehaviour
             ResetRoundCorrectAnswerList.Clear();
             ResetRoundWrongAnswerList.Clear();
             high_NoWordAtResetRound.SetActive(false);
+            high_gameWhitePanel.SetActive(false);
             PlayerPrefs.SetInt("GameStarted", 0);
         }
 
@@ -4700,20 +4490,4 @@ public class GameManager : MonoBehaviour
         }
 
     }
-    IEnumerator CloseGameSectionAfterFewSec()
-    {
-        if(PlayerPrefs.GetString("UIType")=="lowRes")
-        {
-            yield return new WaitForSeconds(1);
-           low_gameSection.SetActive(false);
-        }
-        else
-        {
-            yield return new WaitForSeconds(1);
-            high_gameSection.SetActive(false);
-        }
-       
-    }
-
-
 }

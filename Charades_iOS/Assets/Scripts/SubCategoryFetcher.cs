@@ -63,8 +63,10 @@ public class SubCategoryFetcher : MonoBehaviour
                     categoryList.id = dataArray[i]["id"].AsInt;
                     categoryList.name = dataArray[i]["name"];
                     subCatLists.Add(categoryList);
+                   
                 }
                 Debug.Log("SUB-Categories Data Updated");
+                // GameManager.instance.getCategoryWords();
 
             }
             else

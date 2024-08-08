@@ -214,10 +214,14 @@ public class CategoriesDetial : MonoBehaviour
         if(PlayerPrefs.GetString("UIType")=="lowRes")
         {
             low_categoriesDetails_Animatior.SetBool("isOpen", false);
+            SubCategoryFetcher.instance.subCatLists.Clear();
+            GameManager.instance.WordList.Clear();
         }
         else
         {
             high_categoriesDetails_Animatior.SetBool("isOpen", false);
+            SubCategoryFetcher.instance.subCatLists.Clear();
+            GameManager.instance.WordList.Clear();
         }
        
         foreach(CategoryPrefab g in CategoryManager.instance.categoriesOBjs)

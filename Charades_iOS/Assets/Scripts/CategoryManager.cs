@@ -46,13 +46,13 @@ public class CategoryManager : MonoBehaviour
 
         Debug.Log("Widht:" + currentScreenWidht + "Height:" + currentScreenHeight);
 
-        if(currentScreenWidht<resWidth || currentScreenHeight<resHeight)
+        if(currentScreenWidht>=resWidth || currentScreenHeight>=resHeight)
         {
-            OpenLowResUI();
+            OpenHighResUI();
         }
         else
         {
-            OpenHighResUI();
+            OpenLowResUI();
         }
     }
 

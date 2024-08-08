@@ -92,8 +92,6 @@ public class GameManager : MonoBehaviour
 
     [Header("Instances")]
     public SubCategoryFetcher SubcategoryFetcher;
-    public RecordManager recordManager;
-    public CameraRecording cameraRecording;
     public SoundManager soundManager;
     public bool correctAnswer = false;
     public int rightAnswerGiven = 0;

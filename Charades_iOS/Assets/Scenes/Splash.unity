@@ -1959,7 +1959,7 @@ MonoBehaviour:
   UpdatePanel: {fileID: 1793960513}
   LoadingPanel: {fileID: 5443565942614964988}
   LatestVersion: 0
-  CurrentVersion: 0.12
+  CurrentVersion: 0.1
 --- !u!4 &568461110
 Transform:
   m_ObjectHideFlags: 0

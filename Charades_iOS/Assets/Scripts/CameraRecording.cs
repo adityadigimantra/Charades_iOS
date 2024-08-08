@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿/*
+using UnityEngine;
 using UnityEngine.Android;
 using UnityEngine.UI;
 using System.Collections;
@@ -125,3 +126,4 @@ public class CameraRecording : MonoBehaviour
     }
 
 }
+*/

@@ -46,7 +46,7 @@ public class HomeManager : MonoBehaviour
     }
     private void Start()
     {
-        StartCoroutine(SwitchOffLoadingObj());
+        //StartCoroutine(SwitchOffLoadingObj());
         SelectQuickPlayMode();
     }
     void Update()
@@ -73,7 +73,7 @@ public class HomeManager : MonoBehaviour
             high_res_teamsButton_Unselected.SetActive(true);
             high_res_teamsButton_Selected.SetActive(false);
         }
-
+        
     }
 
     public void SelectVSMode()

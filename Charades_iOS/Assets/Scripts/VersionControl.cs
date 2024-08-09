@@ -5,16 +5,25 @@ using UnityEngine.SceneManagement;
 
 public class VersionControl : MonoBehaviour
 {
+    public static VersionControl instance;
     public GameObject UpdatePanel;
     public GameObject LoadingPanel;
     public string LatestVersion, CurrentVersion;
-
-    void Start()
+    public bool versionUpToDate = false;
+    private void Awake()
     {
+        if(instance==null)
+        {
+            instance = this;
+        }
         StartCoroutine(CheckVersion());
     }
+    void Start()
+    {
+        
+    }
 
-    IEnumerator CheckVersion()
+    public IEnumerator CheckVersion()
     {
 
         WWW BallGame = new WWW("https://raw.githubusercontent.com/adityadigimantra/Charades_VersionControl_iOS/main/Version%20Control");
@@ -25,25 +34,37 @@ public class VersionControl : MonoBehaviour
         if (LatestVersion != CurrentVersion)
         {
             UpdatePanel.SetActive(true);
-            LoadingPanel.SetActive(false);
+            versionUpToDate = false;
         }
         else
         {
-            LoadingPanel.SetActive(true);
+            versionUpToDate = true;
         }
         yield break;
 
     }
-
+    IEnumerator closeLoadingPanel()
+    {
+        yield return new WaitForSeconds(0.5f);
+        LoadingPanel.SetActive(false);
+    }
     IEnumerator loadAfterFewSeconds(float waitBySeconds)
     {
         yield return new WaitForSeconds(waitBySeconds);
-        SceneManager.LoadScene(2);
+        LevelLoader.instance.StartLoadingTransition();
     }
     public void ContinueButtonFunction()
     {
         UpdatePanel.SetActive(false);
-        LoadingPanel.SetActive(true);
+        versionUpToDate = true;
+        if (CategoryFetcher.instance.categoriesLoaded)
+        {
+            SplashManager.instance.prepareHomeScreen();
+        }
+        else
+        {
+            CategoryFetcher.instance.fetchCategories();
+        }
     }
     public void UpdateGameFunction()
     {

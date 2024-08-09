@@ -9,6 +9,8 @@ using UnityEngine.Animations;
 public class SplashManager : MonoBehaviour
 {
     public static SplashManager instance;
+    public GameObject loadingObject;
+    
     private void Awake()
     {
         if (instance == null)
@@ -19,15 +21,13 @@ public class SplashManager : MonoBehaviour
     }
 
     #region Prepare Home Screen
-    public void PrepareHomeScreen()
+    public void prepareHomeScreen()
     {
-        StartCoroutine(prepareHomeScreen());
+        if(VersionControl.instance.versionUpToDate)
+        {
+            loadingObject.SetActive(true);
+            LevelLoader.instance.StartLoadingTransition();
+        }
     }
-    IEnumerator prepareHomeScreen()
-    {
-      yield return new WaitForSeconds(2f);
-      LevelLoader.instance.StartLoadingTransition();
-    }
-  
     #endregion
 }

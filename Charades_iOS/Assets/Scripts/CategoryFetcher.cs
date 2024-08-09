@@ -33,7 +33,7 @@ public class CategoryFetcher : MonoBehaviour
     public static CategoryFetcher instance;
     public string categoryURL = "https://charades.foobar.in/api/category";
     public List<CategoryList> categories = new List<CategoryList>();
-
+    public bool categoriesLoaded = false;
     private void Awake()
     {
         if(instance==null)
@@ -94,7 +94,8 @@ public class CategoryFetcher : MonoBehaviour
                 }
 
                 Debug.Log("Categories Data Updated");
-                SplashManager.instance.PrepareHomeScreen();
+                categoriesLoaded = true;
+                SplashManager.instance.prepareHomeScreen();
 
             }
             else
